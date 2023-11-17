@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import logoLight from "@/assets/images/logoLight.png";
+import Login from "../Auth/Login";
 
 export function MainNav({
   className,
@@ -25,12 +26,9 @@ export function MainNav({
       >
         Accueil
       </a>
-      <a
-        href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Professionnel
-      </a>
+
+      <Login />
+
       <a
         href="/examples/dashboard"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
