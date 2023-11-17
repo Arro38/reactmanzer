@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import logoLight from "@/assets/images/logoLight.png";
 
 export function MainNav({
   className,
@@ -13,25 +14,25 @@ export function MainNav({
         href="/examples/dashboard"
         className="text-sm font-medium transition-colors hover:text-primary"
       >
-        Overview
+        <img src={logoLight} className=" h-24" />
+      </a>
+      <a
+        href="/examples/dashboard"
+        className="text-sm font-medium transition-colors hover:text-primary"
+      >
+        Accueil
       </a>
       <a
         href="/examples/dashboard"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Customers
+        Se connecter
       </a>
       <a
         href="/examples/dashboard"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Products
-      </a>
-      <a
-        href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Settings
+        Mes Repas
       </a>
     </nav>
   );
