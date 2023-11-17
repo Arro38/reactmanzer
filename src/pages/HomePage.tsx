@@ -1,7 +1,11 @@
-import Header from "@/components/common/Header";
+import Hero from "@/components/common/Hero";
 
 function HomePage() {
-  return <Header />;
+  return (
+    <>
+      <Hero />
+    </>
+  );
 }
 
 export default HomePage;
