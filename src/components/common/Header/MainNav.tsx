@@ -14,7 +14,10 @@ export function MainNav({
         href="/examples/dashboard"
         className="text-sm font-medium transition-colors hover:text-primary"
       >
-        <img src={logoLight} className=" h-24" />
+        <img
+          src={logoLight}
+          className="h-20 object-cover transition-all hover:scale-105"
+        />
       </a>
       <a
         href="/examples/dashboard"
@@ -26,7 +29,7 @@ export function MainNav({
         href="/examples/dashboard"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Se connecter
+        Professionnel
       </a>
       <a
         href="/examples/dashboard"

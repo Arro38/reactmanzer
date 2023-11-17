@@ -1,10 +1,10 @@
 import Meal from "@/models/Meal";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-import { Separator } from "../ui/separator";
-import { MealArtwork } from "./Hero/MealArtwork";
+import { ScrollArea, ScrollBar } from "../../ui/scroll-area";
+import { Separator } from "../../ui/separator";
+import { MealCard } from "./MealCard";
 import meals from "@/data/meals";
 
-function Hero() {
+function MostViewedMeals() {
   return (
     <>
       <div className="flex items-center justify-between">
@@ -22,7 +22,7 @@ function Hero() {
         <ScrollArea className="w-full overflow-auto">
           <div className="flex space-x-4 pb-4">
             {meals.map((meal: Meal) => (
-              <MealArtwork
+              <MealCard
                 key={meal.name}
                 album={meal}
                 className="w-[250px]"
@@ -39,4 +39,4 @@ function Hero() {
   );
 }
 
-export default Hero;
+export default MostViewedMeals;
