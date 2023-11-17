@@ -1,9 +1,8 @@
-import { cn } from "@/lib/utils";
 import { UserNav } from "./Header/UserNav";
 import { Search } from "./Header/Search";
 import { MainNav } from "./Header/MainNav";
 
-function Header({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
+function Header() {
   return (
     <div className="hidden flex-col md:flex">
       <div className="border-b">

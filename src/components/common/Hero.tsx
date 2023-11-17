@@ -9,9 +9,11 @@ function Hero() {
     <>
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-2xl font-semibold tracking-tight">Listen Now</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">
+            Repas les Plus Consultés
+          </h2>
           <p className="text-sm text-muted-foreground">
-            Top picks for you. Updated daily.
+            Les repas les plus cliqués aujourd'hui
           </p>
         </div>
       </div>
