@@ -17,6 +17,9 @@ function Footer() {
             </li>
           </ul>
         </div>
+        <p className="text-center">
+          © 2023 Etienne VAYTILINGOM. Tous droits réservés.
+        </p>
         <div className="flex justify-center space-x-4 mt-4 lg:mt-0">
           <a
             className="transition-all hover:scale-105"
@@ -43,11 +46,6 @@ function Footer() {
             <Linkedin />
           </a>
         </div>
-      </div>
-      <div className="pb-2">
-        <p className="text-center">
-          © 2023 Etienne VAYTILINGOM. Tous droits réservés.
-        </p>
       </div>
     </footer>
   );

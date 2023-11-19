@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-function Login({
+function ResetPassword({
   setAuthContent,
 }: {
   setAuthContent: React.Dispatch<
@@ -19,9 +19,9 @@ function Login({
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Authentification</DialogTitle>
+        <DialogTitle>Retrouver son mot de passe</DialogTitle>
         <DialogDescription>
-          Entrez vos informations de connexion.
+          Recevez un lien par mail pour récupérer votre compte.
         </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4 py-4">
@@ -36,42 +36,21 @@ function Login({
             className="col-span-3"
           />
         </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="password" className="text-right">
-            Password
-          </Label>
-          <Input
-            id="password"
-            type="password"
-            placeholder="password"
-            className="col-span-3"
-          />
-        </div>
       </div>
       <DialogFooter>
         <Button
-          variant="secondary"
           type="submit"
+          variant="secondary"
           onClick={() => {
-            setAuthContent("register");
+            setAuthContent("login");
           }}
         >
-          Page d'inscription
+          Page de connexion
         </Button>
-        <Button type="submit">Se connecter</Button>
+        <Button type="submit">Envoyer</Button>
       </DialogFooter>
-      <div className="text-right">
-        <span
-          onClick={() => {
-            setAuthContent("resetpassword");
-          }}
-          className="text-gray-500 hover:underline cursor-pointer"
-        >
-          <DialogDescription>Mot de passer oublié ?</DialogDescription>
-        </span>
-      </div>
     </DialogContent>
   );
 }
 
-export default Login;
+export default ResetPassword;

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import logoLight from "@/assets/images/logoLight.png";
-import Login from "../Auth/Login";
+import HomeAuth from "../Auth/HomeAuth";
 
 export function MainNav({
   className,
@@ -27,7 +27,7 @@ export function MainNav({
         Accueil
       </a>
 
-      <Login />
+      <HomeAuth />
 
       <a
         href="/examples/dashboard"
