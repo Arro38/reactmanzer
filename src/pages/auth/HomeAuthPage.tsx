@@ -1,8 +1,8 @@
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
-import Login from "./Login";
-import Register from "./Register";
-import ResetPassword from "./ResetPassword";
+import Login from "./LoginPage";
+import Register from "./RegisterPage";
+import ResetPassword from "./ResetPasswordPage";
 
 export function HomeAuth() {
   const [authContent, setAuthContent] = useState<

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import logoLight from "@/assets/images/logoLight.png";
-import HomeAuth from "../Auth/HomeAuth";
+import HomeAuthPage from "@/pages/auth/HomeAuthPage";
+import { Link } from "react-router-dom";
 
 export function MainNav({
   className,
@@ -11,30 +12,27 @@ export function MainNav({
       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
       {...props}
     >
-      <a
-        href="/examples/dashboard"
-        className="text-sm font-medium transition-colors hover:text-primary"
-      >
+      <Link to={`/`}>
         <img
           src={logoLight}
           className="h-20 object-cover transition-all hover:scale-105"
         />
-      </a>
-      <a
-        href="/examples/dashboard"
+      </Link>
+      <Link
+        to={`/`}
         className="text-sm font-medium transition-colors hover:text-primary"
       >
         Accueil
-      </a>
+      </Link>
 
-      <HomeAuth />
+      <HomeAuthPage />
 
-      <a
-        href="/examples/dashboard"
+      <Link
+        to={`/meals`}
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Mes Repas
-      </a>
+      </Link>
     </nav>
   );
 }

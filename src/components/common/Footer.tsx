@@ -3,14 +3,12 @@ import MentionsLegales from "./MentionsLegales";
 
 function Footer() {
   return (
-    <footer className=" bg-slate-100 border-t">
+    <footer className=" bg-slate-100 border-t  ">
       <div className="container flex flex-wrap items-center justify-center px-4 py-8 mx-auto  lg:justify-between">
         <div className="flex flex-wrap justify-center">
           <ul className="flex items-center space-x-4">
             <li>
-              <a href={"mailto:formation.etienne.re@gmail.com"}>
-                Contactez-moi
-              </a>
+              <a href={"mailto:contact@formaterz.fr"}>Contactez-moi</a>
             </li>
             <li>
               <MentionsLegales />

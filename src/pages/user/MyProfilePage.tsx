@@ -16,21 +16,21 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-
-function Register({
-  setAuthContent,
-}: {
-  setAuthContent: React.Dispatch<
-    React.SetStateAction<"login" | "register" | "resetpassword">
-  >;
-}) {
+import { Separator } from "@/components/ui/separator";
+function MyProfilePage() {
   return (
-    <DialogContent className="sm:max-w-[425px]">
-      <DialogHeader>
-        <DialogTitle>Créer un compte</DialogTitle>
-        <DialogDescription>Entrez vos informations.</DialogDescription>
-      </DialogHeader>
-      <form className="grid gap-4 py-4">
+    <>
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <h2 className="text-2xl font-semibold tracking-tight">Mon profil</h2>
+          <p className="text-sm text-muted-foreground">
+            Modifier vos informations personnelles
+          </p>
+        </div>
+      </div>
+      <Separator className="my-4" />
+
+      <form className="grid gap-4 py-4 container">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">
             Email
@@ -99,20 +99,11 @@ function Register({
             </SelectContent>
           </Select>
         </div>
-        <DialogFooter>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setAuthContent("login");
-            }}
-          >
-            Page de connexion
-          </Button>
-          <Button type="submit">S'inscrire</Button>
-        </DialogFooter>
+
+        <Button type="submit">S'inscrire</Button>
       </form>
-    </DialogContent>
+    </>
   );
 }
 
-export default Register;
+export default MyProfilePage;

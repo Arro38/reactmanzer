@@ -9,15 +9,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 export function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8 bg-slate-100  transition-all hover:scale-105">
+          <Avatar className="h-8 w-8  transition-all hover:scale-105">
             <AvatarImage src="/avatars/01.png" alt="photo profil" />
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarFallback className="bg-slate-300">SC</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -32,10 +33,24 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link
+              className="hover:opacity-80 hover:underline transition-all"
+              to={`/profile`}
+            >
+              Profile
+            </Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Se déconnecter</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link
+            className="hover:opacity-80 hover:underline transition-all"
+            to={`/logout`}
+          >
+            Se déconnecter
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
