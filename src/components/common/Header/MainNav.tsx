@@ -20,7 +20,7 @@ export function MainNav({
       </Link>
       <Link
         to={`/`}
-        className="text-sm font-medium transition-colors hover:text-primary"
+        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Accueil
       </Link>

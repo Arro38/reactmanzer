@@ -1,23 +1,15 @@
-import { Separator } from "@/components/ui/separator";
 import meals from "@/data/meals";
 import { MealCard } from "./MealCard";
 import { Search } from "../Search";
+import Title from "../Title";
 function AllMeals() {
   return (
-    <>
-      <div className="mt-6 space-y-1 flex items-center gap-6 flex-wrap">
-        <div>
-          <h2 className="text-2xl font-semibold tracking-tight">
-            Tous les Repas.
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            Les repas disponibles aujourd'hui
-          </p>
-        </div>
-
-        <Search />
-      </div>
-      <Separator className="my-4" />
+    <div className="pt-4">
+      <Title
+        title="Tous les Repas"
+        subtitle="Les repas disponibles aujourd'hui"
+      />
+      <Search />
       <div className="relative">
         <div className="flex  pb-4 flex-wrap gap-6 justify-center">
           {meals.map((meal) => (
@@ -42,7 +34,7 @@ function AllMeals() {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

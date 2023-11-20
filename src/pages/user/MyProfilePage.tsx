@@ -1,11 +1,5 @@
+import Title from "@/components/common/Title";
 import { Button } from "@/components/ui/button";
-import {
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -16,20 +10,10 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 function MyProfilePage() {
   return (
     <>
-      <div className="flex items-center justify-between">
-        <div className="space-y-1">
-          <h2 className="text-2xl font-semibold tracking-tight">Mon profil</h2>
-          <p className="text-sm text-muted-foreground">
-            Modifier vos informations personnelles
-          </p>
-        </div>
-      </div>
-      <Separator className="my-4" />
-
+      <Title title="Mes informations" subtitle="Modifier vos informations" />
       <form className="grid gap-4 py-4 container">
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">

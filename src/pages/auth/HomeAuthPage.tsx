@@ -11,7 +11,7 @@ export function HomeAuth() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <span className="cursor-pointer hover:opacity-80">
+        <span className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary cursor-pointer">
           Espace Professionnel
         </span>
       </DialogTrigger>

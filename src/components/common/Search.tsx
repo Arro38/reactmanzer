@@ -3,7 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 export function Search() {
   return (
-    <div className="flex items-center gap-4 flex-wrap">
+    <div className="flex items-center gap-4 flex-wrap justify-center pb-4">
       <Input
         type="search"
         placeholder="Rechercher..."
