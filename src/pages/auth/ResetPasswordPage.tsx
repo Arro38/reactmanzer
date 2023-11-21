@@ -8,16 +8,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { setAuthContent } from "@/redux/features/userSlice";
+import { useDispatch } from "react-redux";
 
-function ResetPassword({
-  setAuthContent,
-}: {
-  setAuthContent: React.Dispatch<
-    React.SetStateAction<"login" | "register" | "resetpassword">
-  >;
-}) {
+function ResetPassword() {
+  const dispatch = useDispatch();
   return (
-    <DialogContent className="sm:max-w-[425px]">
+    <>
       <DialogHeader>
         <DialogTitle>Retrouver son mot de passe</DialogTitle>
         <DialogDescription>
@@ -41,7 +38,7 @@ function ResetPassword({
           <Button
             variant="secondary"
             onClick={() => {
-              setAuthContent("login");
+              dispatch(setAuthContent("login"));
             }}
           >
             Page de connexion
@@ -49,7 +46,7 @@ function ResetPassword({
           <Button type="submit">Envoyer</Button>
         </DialogFooter>
       </form>
-    </DialogContent>
+    </>
   );
 }
 

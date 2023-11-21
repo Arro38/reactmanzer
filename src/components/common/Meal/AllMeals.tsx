@@ -14,17 +14,7 @@ function AllMeals() {
         <div className="flex  pb-4 flex-wrap gap-6 justify-center">
           {meals.map((meal) => (
             <MealCard
-              key={meal.name}
-              album={meal}
-              className="w-[150px]"
-              aspectRatio="square"
-              width={150}
-              height={150}
-            />
-          ))}
-          {meals.map((meal) => (
-            <MealCard
-              key={meal.name}
+              key={meal.id}
               album={meal}
               className="w-[150px]"
               aspectRatio="square"

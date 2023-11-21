@@ -4,8 +4,12 @@ interface Meal {
   description: string;
   price: number;
   image: string;
-  userId: number;
+  user_id: number;
   enabled: boolean;
+  user: {
+    id: number;
+    sector_id: number;
+  };
 }
 
 export default Meal;

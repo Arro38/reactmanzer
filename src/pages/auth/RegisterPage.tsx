@@ -16,16 +16,13 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { setAuthContent } from "@/redux/features/userSlice";
+import { useDispatch } from "react-redux";
 
-function Register({
-  setAuthContent,
-}: {
-  setAuthContent: React.Dispatch<
-    React.SetStateAction<"login" | "register" | "resetpassword">
-  >;
-}) {
+function Register() {
+  const dispatch = useDispatch();
   return (
-    <DialogContent className="sm:max-w-[425px]">
+    <>
       <DialogHeader>
         <DialogTitle>Créer un compte</DialogTitle>
         <DialogDescription>Entrez vos informations.</DialogDescription>
@@ -103,7 +100,7 @@ function Register({
           <Button
             variant="secondary"
             onClick={() => {
-              setAuthContent("login");
+              dispatch(setAuthContent("login"));
             }}
           >
             Page de connexion
@@ -111,7 +108,7 @@ function Register({
           <Button type="submit">S'inscrire</Button>
         </DialogFooter>
       </form>
-    </DialogContent>
+    </>
   );
 }
 

@@ -8,23 +8,32 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { setAuthContent, setLoading } from "@/redux/features/userSlice";
+import { store } from "@/redux/store";
+import { loginUser } from "@/services/auth";
+import { useDispatch } from "react-redux";
 
-function Login({
-  setAuthContent,
-}: {
-  setAuthContent: React.Dispatch<
-    React.SetStateAction<"login" | "register" | "resetpassword">
-  >;
-}) {
+function Login() {
+  const dispatch = useDispatch();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const email = form.email.value;
+    const password = form.password.value;
+    dispatch(setLoading(true));
+    store.dispatch(loginUser({ email, password }));
+    form.reset();
+  };
+
   return (
-    <DialogContent className="sm:max-w-[425px]">
+    <>
       <DialogHeader>
         <DialogTitle>Authentification</DialogTitle>
         <DialogDescription>
           Entrez vos informations de connexion.
         </DialogDescription>
       </DialogHeader>
-      <form className="grid gap-4 py-4">
+      <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">
             Email
@@ -53,7 +62,7 @@ function Login({
           <Button
             variant="secondary"
             onClick={() => {
-              setAuthContent("register");
+              dispatch(setAuthContent("register"));
             }}
           >
             Page d'inscription
@@ -64,14 +73,14 @@ function Login({
       <div className="text-right">
         <span
           onClick={() => {
-            setAuthContent("resetpassword");
+            dispatch(setAuthContent("resetpassword"));
           }}
           className="text-gray-500 hover:underline cursor-pointer"
         >
           <DialogDescription>Mot de passer oublié ?</DialogDescription>
         </span>
       </div>
-    </DialogContent>
+    </>
   );
 }
 
