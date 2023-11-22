@@ -9,12 +9,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { setAuthContent, setLoading } from "@/redux/features/userSlice";
-import { store } from "@/redux/store";
+import { RootState, store } from "@/redux/store";
 import { loginUser } from "@/services/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "@/components/ui/use-toast";
+import { useEffect } from "react";
 
 function Login() {
   const dispatch = useDispatch();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -22,6 +25,7 @@ function Login() {
     const password = form.password.value;
     dispatch(setLoading(true));
     store.dispatch(loginUser({ email, password }));
+
     form.reset();
   };
 
@@ -60,6 +64,7 @@ function Login() {
         </div>
         <DialogFooter>
           <Button
+            type="button"
             variant="secondary"
             onClick={() => {
               dispatch(setAuthContent("register"));

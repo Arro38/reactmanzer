@@ -4,8 +4,11 @@ import { Separator } from "../../ui/separator";
 import { MealCard } from "./MealCard";
 import meals from "@/data/meals";
 import Title from "../Title";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 function MostViewedMeals() {
+  // const search = useSelector((state: RootState) => state.meals.search);
   return (
     <>
       <Title

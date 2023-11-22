@@ -45,16 +45,18 @@ const registerUser = createAsyncThunk(
   "auth/register",
   async ({ user, password }: { user: User; password: string }) => {
     try {
-      console.log(JSON.stringify({ ...user, password }));
+      const data = JSON.stringify({ ...user, password });
       const response = await fetch(API_URL + "register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...user, password }),
+        body: data,
       });
+
       if (!response.ok) return false;
       const result = (await response.json()) as Token;
+      console.log(result);
       return result.token;
     } catch (error) {
       console.log(error);

@@ -11,11 +11,9 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface UserState {
   token: string;
   user: User;
-  isLogged: boolean;
+  isLogged: boolean | null;
   loading: boolean;
   authContent: AuthContent;
-  sucessMessage: string;
-  errorMessage: string;
 }
 
 const initialState: UserState = {
@@ -25,12 +23,24 @@ const initialState: UserState = {
     email: "",
     name: "",
     sector_id: 0,
+    tel: "",
+    adress: "",
   },
-  isLogged: false,
+  isLogged: null,
   loading: false,
   authContent: "none",
-  sucessMessage: "",
-  errorMessage: "",
+};
+
+const resetUser = (state: any) => {
+  state.loading = false;
+  state.token = "";
+  state.isLogged = false;
+  state.user = {
+    id: 0,
+    email: "",
+    name: "",
+    sector_id: 0,
+  };
 };
 // TODO Refactoring the userSlice.ts file put authContent, successMessage and errorMessage in the same slice (utilSlice.ts)
 
@@ -44,62 +54,40 @@ const userSlice = createSlice({
     setAuthContent(state, action) {
       state.authContent = action.payload;
     },
-    setSucessMessage(state, action) {
-      state.sucessMessage = action.payload;
-    },
-    setErrorMessage(state, action) {
-      state.errorMessage = action.payload;
-    },
   },
   extraReducers: (builder) => {
-    builder.addCase(loginUser.fulfilled, (state, action) => {
+    builder.addCase(loginUser.fulfilled, (state, { payload }) => {
       state.loading = false;
-      if (action.payload === false) {
+      resetUser(state);
+      if (payload === false) {
         state.authContent = "login";
-        state.errorMessage = "Identifiant ou mot de passe incorrect";
         return;
       }
-      state.sucessMessage = "Connexion réussie";
-      state.token = action.payload;
+      state.token = payload;
       state.isLogged = true;
       state.authContent = "none";
     });
-    builder.addCase(registerUser.fulfilled, (state, action) => {
+    builder.addCase(registerUser.fulfilled, (state, { payload }) => {
       state.loading = false;
-      if (action.payload === false) {
-        state.errorMessage = "Une erreur est survenue";
+      if (payload === false) {
+        resetUser(state);
         state.authContent = "register";
         return;
       }
-      state.sucessMessage = "Inscription réussie";
       state.authContent = "none";
-      state.token = action.payload;
+      state.token = payload;
       state.isLogged = true;
     });
     builder.addCase(fetchUserData.fulfilled, (state, action) => {
       state.loading = false;
-      console.log(action.payload);
       if (action.payload === false) {
         // state.token = "";
         return;
       }
       state.user = action.payload;
     });
-    builder.addCase(logoutUser.fulfilled, (state, action) => {
-      state.loading = false;
-      if (action.payload === false) {
-        state.errorMessage = "Une erreur est survenue";
-        return;
-      }
-      state.sucessMessage = "Déconnexion réussie";
-      state.token = "";
-      state.isLogged = false;
-      state.user = {
-        id: 0,
-        email: "",
-        name: "",
-        sector_id: 0,
-      };
+    builder.addCase(logoutUser.fulfilled, (state, { payload }) => {
+      resetUser(state);
     });
   },
 });

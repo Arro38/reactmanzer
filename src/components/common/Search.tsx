@@ -3,7 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { CheckedState } from "@radix-ui/react-checkbox";
-import { toggleSectorSelected } from "@/redux/features/mealSlice";
+import { setSearch, toggleSectorSelected } from "@/redux/features/mealSlice";
 
 export function Search() {
   const sectors = useSelector((state: RootState) => state.meals.allSectors);
@@ -17,6 +17,9 @@ export function Search() {
         type="search"
         placeholder="Rechercher..."
         className="md:w-[100px] lg:w-[300px] border-['217.2 32.6% 17.5%']"
+        onInput={(e) => {
+          dispatch(setSearch(e.currentTarget.value));
+        }}
       />
       {sectors.map((sector) => (
         <div key={sector.id} className="flex items-center space-x-2">

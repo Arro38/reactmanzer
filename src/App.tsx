@@ -10,20 +10,36 @@ import { useSelector } from "react-redux";
 import { RootState, store } from "./redux/store";
 import Loading from "./components/common/Loading";
 import { useEffect } from "react";
-import { fetchUserData } from "./services/auth";
+import { fetchUserData, logoutUser } from "./services/auth";
+import { Toaster } from "./components/ui/toaster";
+import { useToast } from "./components/ui/use-toast";
 
 function App() {
   const loading = useSelector((state: RootState) => state.users.loading);
   const token = useSelector((state: RootState) => state.users.token);
+  const isLogged = useSelector((state: RootState) => state.users.isLogged);
+  const { toast } = useToast();
 
   useEffect(() => {
-    const getUserData = async () => {
-      if (token) {
-        store.dispatch(fetchUserData(token));
-      }
-    };
-    getUserData();
+    if (token) {
+      store.dispatch(fetchUserData(token));
+    }
   }, [token]);
+
+  useEffect(() => {
+    if (isLogged !== null)
+      toast({
+        title: isLogged ? "Connexion réussie" : "Connexion échouée",
+        description: isLogged
+          ? "Vous êtes maintenant connecté"
+          : "Veuillez vérifier vos identifiants",
+        variant: isLogged ? "default" : "destructive",
+        duration: 3000,
+      });
+    if (!isLogged && token) {
+      store.dispatch(logoutUser(token));
+    }
+  }, [isLogged]);
   return (
     <BrowserRouter>
       <div className=" flex flex-col h-screen justify-between  bg-primary-foreground">
@@ -41,6 +57,7 @@ function App() {
             </Routes>
           )}
         </div>
+        <Toaster />
         <Footer />
       </div>
     </BrowserRouter>
