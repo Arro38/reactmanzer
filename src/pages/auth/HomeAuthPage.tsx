@@ -4,14 +4,12 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
 import Login from "./LoginPage";
 import Register from "./RegisterPage";
-import ResetPassword from "./ResetPasswordPage";
+import SendResetPasswordPage from "./SendResetPasswordPage";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import Loading from "@/components/common/Loading";
-import { AuthContent } from "@/models/AuthContent";
 import { setAuthContent } from "@/redux/features/userSlice";
 import { X } from "lucide-react";
 
@@ -38,7 +36,7 @@ export function HomeAuth() {
           <DialogContent className="sm:max-w-[425px]">
             {authContent === "login" && <Login />}
             {authContent === "register" && <Register />}
-            {authContent === "resetpassword" && <ResetPassword />}
+            {authContent === "resetpassword" && <SendResetPasswordPage />}
             {authContent === "loading" && <Loading />}
 
             <DialogClose

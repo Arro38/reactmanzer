@@ -56,7 +56,6 @@ const registerUser = createAsyncThunk(
 
       if (!response.ok) return false;
       const result = (await response.json()) as Token;
-      console.log(result);
       return result.token;
     } catch (error) {
       console.log(error);
@@ -65,6 +64,55 @@ const registerUser = createAsyncThunk(
   }
 );
 
+const sendResetPasswordEmail = createAsyncThunk(
+  "auth/forgot-password",
+  async (email: string) => {
+    try {
+      const response = await fetch(API_URL + "forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      if (!response.ok) return false;
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+);
+
+const updateResetPassword = createAsyncThunk(
+  "auth/reset-password",
+  async ({
+    token,
+    email,
+    password,
+    password_confirmation,
+  }: {
+    token: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+  }) => {
+    try {
+      const response = await fetch(API_URL + "reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token, email, password, password_confirmation }),
+      });
+      if (!response.ok) return false;
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+);
 const fetchUserData = createAsyncThunk("auth/me", async (token: string) => {
   try {
     const response = await fetch(API_URL + "users/me", {
@@ -81,4 +129,11 @@ const fetchUserData = createAsyncThunk("auth/me", async (token: string) => {
     return false;
   }
 });
-export { loginUser, logoutUser, registerUser, fetchUserData };
+export {
+  loginUser,
+  logoutUser,
+  registerUser,
+  fetchUserData,
+  sendResetPasswordEmail,
+  updateResetPassword,
+};

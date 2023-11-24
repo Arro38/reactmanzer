@@ -5,6 +5,8 @@ import {
   fetchUserData,
   registerUser,
   logoutUser,
+  sendResetPasswordEmail,
+  updateResetPassword,
 } from "@/services/auth";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -24,7 +26,7 @@ const initialState: UserState = {
     name: "",
     sector_id: 0,
     tel: "",
-    adress: "",
+    address: "",
   },
   isLogged: null,
   loading: false,
@@ -88,6 +90,20 @@ const userSlice = createSlice({
     });
     builder.addCase(logoutUser.fulfilled, (state, { payload }) => {
       resetUser(state);
+    });
+    builder.addCase(sendResetPasswordEmail.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      // TODO : Update the state to display a message to the user using state from toastSlice.ts
+
+      if (payload === false) {
+        return;
+      }
+    });
+    builder.addCase(updateResetPassword.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      if (payload === false) {
+        return;
+      }
     });
   },
 });

@@ -13,11 +13,20 @@ import { useEffect } from "react";
 import { fetchUserData, logoutUser } from "./services/auth";
 import { Toaster } from "./components/ui/toaster";
 import { useToast } from "./components/ui/use-toast";
+import UpdateResetPasswordPage from "./pages/auth/UpdateResetPasswordPage";
+import { stat } from "fs";
+import { ToastMessage, resetToast } from "./redux/features/toastSlice";
 
 function App() {
   const loading = useSelector((state: RootState) => state.users.loading);
   const token = useSelector((state: RootState) => state.users.token);
   const isLogged = useSelector((state: RootState) => state.users.isLogged);
+  const errorMessage: ToastMessage = useSelector(
+    (state: RootState) => state.toasts.error
+  );
+  const successMessage: ToastMessage = useSelector(
+    (state: RootState) => state.toasts.success
+  );
   const { toast } = useToast();
 
   useEffect(() => {
@@ -40,6 +49,35 @@ function App() {
       store.dispatch(logoutUser(token));
     }
   }, [isLogged]);
+
+  useEffect(() => {
+    if (errorMessage.message) {
+      toast({
+        title: errorMessage.title,
+        description: errorMessage.message,
+        variant: "destructive",
+        duration: 2000,
+      });
+      setTimeout(() => {
+        store.dispatch(resetToast());
+      }, 2000);
+    }
+  }, [errorMessage]);
+
+  useEffect(() => {
+    if (successMessage.message) {
+      toast({
+        title: successMessage.title,
+        description: successMessage.message,
+        variant: "default",
+        duration: 2000,
+      });
+      setTimeout(() => {
+        store.dispatch(resetToast());
+      }, 2000);
+    }
+  }, [successMessage]);
+
   return (
     <BrowserRouter>
       <div className=" flex flex-col h-screen justify-between  bg-primary-foreground">
@@ -54,6 +92,10 @@ function App() {
               <Route path="meals" element={<MyMealsPage />} />
               <Route path="meals/create" element={<MealFormPage />} />
               <Route path="meals/:id" element={<MealFormPage />} />
+              <Route
+                path="reset-password/*"
+                element={<UpdateResetPasswordPage />}
+              />
             </Routes>
           )}
         </div>

@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import {
-  DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
@@ -9,10 +8,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { setAuthContent } from "@/redux/features/userSlice";
+import { store } from "@/redux/store";
+import { sendResetPasswordEmail } from "@/services/auth";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-function ResetPassword() {
+function SendResetPasswordPage() {
   const dispatch = useDispatch();
+  const [emailSend, setEmailSend] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const email: string = form.email.value;
+    store.dispatch(sendResetPasswordEmail(email));
+    setEmailSend(true);
+    form.reset();
+  };
+
   return (
     <>
       <DialogHeader>
@@ -21,7 +34,8 @@ function ResetPassword() {
           Recevez un lien par mail pour récupérer votre compte.
         </DialogDescription>
       </DialogHeader>
-      <form className="grid gap-4 py-4">
+
+      <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">
             Email
@@ -41,13 +55,21 @@ function ResetPassword() {
               dispatch(setAuthContent("login"));
             }}
           >
-            Page de connexion
+            {" "}
+            Se connecter{" "}
           </Button>
-          <Button type="submit">Envoyer</Button>
+          {emailSend ? (
+            <p>
+              Un email vous a été envoyé pour récupérer votre compte si il
+              existe.
+            </p>
+          ) : (
+            <Button type="submit">Envoyer</Button>
+          )}
         </DialogFooter>
       </form>
     </>
   );
 }
 
-export default ResetPassword;
+export default SendResetPasswordPage;
