@@ -7,7 +7,7 @@ import MyMealsPage from "./pages/user/MyMealsPage";
 import MealFormPage from "./pages/user/MealFormPage";
 
 import { useSelector } from "react-redux";
-import { RootState, store } from "./redux/store";
+import { RootState, store, thunkDispatch } from "./redux/store";
 import Loading from "./components/common/Loading";
 import { useEffect } from "react";
 import { fetchUserData, logoutUser } from "./services/auth";
@@ -21,6 +21,7 @@ import {
   setErrorMessage,
   setSuccessMessage,
 } from "./redux/features/toastSlice";
+import { fetchAllSectors } from "./services/api";
 
 function App() {
   const loading = useSelector((state: RootState) => state.users.loading);
@@ -38,12 +39,17 @@ function App() {
   const sendResetPasswordEmail = useSelector(
     (state: RootState) => state.users.sendResetPasswordEmail
   );
+  const dispatch = thunkDispatch;
 
   const { toast } = useToast();
 
   useEffect(() => {
+    dispatch(fetchAllSectors());
+  }, []);
+
+  useEffect(() => {
     if (token) {
-      store.dispatch(fetchUserData(token));
+      dispatch(fetchUserData(token));
     }
   }, [token]);
 
@@ -58,7 +64,7 @@ function App() {
         duration: 3000,
       });
     if (!isLogged && token) {
-      store.dispatch(logoutUser(token));
+      dispatch(logoutUser(token));
     }
   }, [isLogged]);
 

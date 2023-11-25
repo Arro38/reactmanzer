@@ -64,7 +64,7 @@ export function UserNav() {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <a
-            className="hover:opacity-80 hover:underline transition-all"
+            className="hover:opacity-80 hover:underline transition-all cursor-pointer"
             onClick={logout}
           >
             Se déconnecter
