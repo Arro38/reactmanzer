@@ -58,14 +58,7 @@ function SendResetPasswordPage() {
             {" "}
             Se connecter{" "}
           </Button>
-          {emailSend ? (
-            <p>
-              Un email vous a été envoyé pour récupérer votre compte si il
-              existe.
-            </p>
-          ) : (
-            <Button type="submit">Envoyer</Button>
-          )}
+          {!emailSend && <Button type="submit">Envoyer</Button>}
         </DialogFooter>
       </form>
     </>

@@ -1,21 +1,17 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import {
-  useNavigate,
-  useNavigation,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setErrorMessage } from "@/redux/features/toastSlice";
 import { updateResetPassword } from "@/services/auth";
 import { store } from "@/redux/store";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 function UpdateResetPasswordPage() {
   const dispatch = useDispatch();
   let [searchParams, setSearchParams] = useSearchParams();
   const [token, setToken] = useState(searchParams.get("token"));
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +28,6 @@ function UpdateResetPasswordPage() {
       );
       return;
     }
-
     store.dispatch(
       updateResetPassword({
         token: token ?? "",
@@ -44,10 +39,11 @@ function UpdateResetPasswordPage() {
 
     // dispatch(setErrorMessage({ title: "Erreur", message: "Erreur Message" }));
     form.reset();
+    navigate("/");
   };
 
   return !token ? (
-    <h1>Oups ... Ce lien n'est plus disponible </h1>
+    <h1>Oups ... Ce lien n'est pas valide </h1>
   ) : (
     <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
       <div className="grid grid-cols-4 items-center gap-4">

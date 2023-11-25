@@ -14,8 +14,13 @@ import { fetchUserData, logoutUser } from "./services/auth";
 import { Toaster } from "./components/ui/toaster";
 import { useToast } from "./components/ui/use-toast";
 import UpdateResetPasswordPage from "./pages/auth/UpdateResetPasswordPage";
-import { stat } from "fs";
-import { ToastMessage, resetToast } from "./redux/features/toastSlice";
+
+import {
+  ToastMessage,
+  resetToast,
+  setErrorMessage,
+  setSuccessMessage,
+} from "./redux/features/toastSlice";
 
 function App() {
   const loading = useSelector((state: RootState) => state.users.loading);
@@ -27,6 +32,13 @@ function App() {
   const successMessage: ToastMessage = useSelector(
     (state: RootState) => state.toasts.success
   );
+  const passwordReset = useSelector(
+    (state: RootState) => state.users.passwordReset
+  );
+  const sendResetPasswordEmail = useSelector(
+    (state: RootState) => state.users.sendResetPasswordEmail
+  );
+
   const { toast } = useToast();
 
   useEffect(() => {
@@ -77,6 +89,44 @@ function App() {
       }, 2000);
     }
   }, [successMessage]);
+
+  useEffect(() => {
+    if (passwordReset) {
+      store.dispatch(
+        setSuccessMessage({
+          title: "Mot de passe modifié",
+          message:
+            "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe",
+        })
+      );
+    } else if (passwordReset === false) {
+      store.dispatch(
+        setErrorMessage({
+          title: "Erreur",
+          message: "Le lien de réinitialisation n'est plus valide",
+        })
+      );
+    }
+  }, [passwordReset]);
+
+  useEffect(() => {
+    if (sendResetPasswordEmail) {
+      store.dispatch(
+        setSuccessMessage({
+          title: "Email envoyé",
+          message:
+            "Vous allez recevoir un email pour réinitialiser votre mot de passe",
+        })
+      );
+    } else if (sendResetPasswordEmail === false) {
+      store.dispatch(
+        setErrorMessage({
+          title: "Erreur",
+          message: "L'email n'a pas pu être envoyé",
+        })
+      );
+    }
+  }, [sendResetPasswordEmail]);
 
   return (
     <BrowserRouter>

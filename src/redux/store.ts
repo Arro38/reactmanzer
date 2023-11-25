@@ -5,9 +5,9 @@ import toastSlice from "./features/toastSlice";
 
 export const store = configureStore({
   reducer: {
+    toasts: toastSlice,
     meals: mealSlice,
     users: userSlice,
-    toasts: toastSlice,
   },
 });
 

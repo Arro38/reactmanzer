@@ -16,6 +16,8 @@ export interface UserState {
   isLogged: boolean | null;
   loading: boolean;
   authContent: AuthContent;
+  passwordReset: boolean | null;
+  sendResetPasswordEmail: boolean | null;
 }
 
 const initialState: UserState = {
@@ -31,12 +33,17 @@ const initialState: UserState = {
   isLogged: null,
   loading: false,
   authContent: "none",
+  passwordReset: null,
+  sendResetPasswordEmail: null,
 };
 
 const resetUser = (state: any) => {
   state.loading = false;
   state.token = "";
-  state.isLogged = false;
+  state.isLogged = null;
+  state.authContent = "none";
+  state.passwordReset = null;
+  state.sendResetPasswordEmail = null;
   state.user = {
     id: 0,
     email: "",
@@ -55,6 +62,12 @@ const userSlice = createSlice({
     },
     setAuthContent(state, action) {
       state.authContent = action.payload;
+    },
+    setSendResetPasswordEmail(state, action) {
+      state.sendResetPasswordEmail = action.payload;
+    },
+    setPasswordReset(state, action) {
+      state.passwordReset = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -93,17 +106,19 @@ const userSlice = createSlice({
     });
     builder.addCase(sendResetPasswordEmail.fulfilled, (state, { payload }) => {
       state.loading = false;
-      // TODO : Update the state to display a message to the user using state from toastSlice.ts
-
       if (payload === false) {
+        state.sendResetPasswordEmail = false;
         return;
       }
+      state.sendResetPasswordEmail = true;
     });
     builder.addCase(updateResetPassword.fulfilled, (state, { payload }) => {
       state.loading = false;
       if (payload === false) {
+        state.passwordReset = false;
         return;
       }
+      state.passwordReset = true;
     });
   },
 });
