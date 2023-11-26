@@ -8,20 +8,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { setAuthContent } from "@/redux/features/userSlice";
-import { store } from "@/redux/store";
+import { store, thunkDispatch } from "@/redux/store";
 import { sendResetPasswordEmail } from "@/services/auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 function SendResetPasswordPage() {
-  const dispatch = useDispatch();
+  const dispatch = thunkDispatch;
   const [emailSend, setEmailSend] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const email: string = form.email.value;
-    store.dispatch(sendResetPasswordEmail(email));
+    dispatch(sendResetPasswordEmail(email));
     setEmailSend(true);
     form.reset();
   };

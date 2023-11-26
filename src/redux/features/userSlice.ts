@@ -7,6 +7,8 @@ import {
   logoutUser,
   sendResetPasswordEmail,
   updateResetPassword,
+  updateUserData,
+  updateUserPassword,
 } from "@/services/auth";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -69,6 +71,9 @@ const userSlice = createSlice({
     setPasswordReset(state, action) {
       state.passwordReset = action.payload;
     },
+    setUser(state, { payload }) {
+      state.user = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
@@ -120,7 +125,27 @@ const userSlice = createSlice({
       }
       state.passwordReset = true;
     });
+    builder.addCase(updateUserData.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      if (payload === false) {
+        return;
+      }
+      state.user = payload;
+    });
+    builder.addCase(updateUserPassword.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      if (payload === false) {
+        return;
+      }
+      state.user = payload;
+    });
   },
 });
-export const { setLoading, setAuthContent } = userSlice.actions;
+export const {
+  setLoading,
+  setAuthContent,
+  setUser,
+  setSendResetPasswordEmail,
+  setPasswordReset,
+} = userSlice.actions;
 export default userSlice.reducer;

@@ -5,10 +5,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setErrorMessage } from "@/redux/features/toastSlice";
 import { updateResetPassword } from "@/services/auth";
-import { store } from "@/redux/store";
+import { thunkDispatch } from "@/redux/store";
 import { useState } from "react";
 function UpdateResetPasswordPage() {
-  const dispatch = useDispatch();
+  const dispatch = thunkDispatch;
   let [searchParams, setSearchParams] = useSearchParams();
   const [token, setToken] = useState(searchParams.get("token"));
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ function UpdateResetPasswordPage() {
       );
       return;
     }
-    store.dispatch(
+    dispatch(
       updateResetPassword({
         token: token ?? "",
         email: email,

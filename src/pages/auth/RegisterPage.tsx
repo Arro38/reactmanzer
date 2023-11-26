@@ -18,13 +18,13 @@ import {
 } from "@/components/ui/select";
 import User from "@/models/User";
 import { setAuthContent, setLoading } from "@/redux/features/userSlice";
-import { RootState, store } from "@/redux/store";
+import { RootState, thunkDispatch } from "@/redux/store";
 import { registerUser } from "@/services/auth";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function Register() {
-  const dispatch = useDispatch();
+  const dispatch = thunkDispatch;
   const sectors = useSelector((state: RootState) => state.meals.allSectors);
   const [selectedSector, setSelectedSector] = useState(1);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,7 +40,7 @@ function Register() {
       sector_id: selectedSector,
     };
     dispatch(setLoading(true));
-    store.dispatch(registerUser({ user, password }));
+    dispatch(registerUser({ user, password }));
 
     form.reset();
   };

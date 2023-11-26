@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
@@ -50,23 +50,27 @@ function App() {
   useEffect(() => {
     if (token) {
       dispatch(fetchUserData(token));
+    } else {
+      dispatch(logoutUser(token));
     }
   }, [token]);
 
-  useEffect(() => {
-    if (isLogged !== null)
-      toast({
-        title: isLogged ? "Connexion réussie" : "Connexion échouée",
-        description: isLogged
-          ? "Vous êtes maintenant connecté"
-          : "Veuillez vérifier vos identifiants",
-        variant: isLogged ? "default" : "destructive",
-        duration: 3000,
-      });
-    if (!isLogged && token) {
-      dispatch(logoutUser(token));
-    }
-  }, [isLogged]);
+  // TODO REFACTORING TOASTS
+  // useEffect(() => {
+  //   if (isLogged !== null)
+  //     toast({
+  //       title: isLogged ? "Connexion réussie" : "Connexion échouée",
+  //       description: isLogged
+  //         ? "Vous êtes maintenant connecté"
+  //         : "Veuillez vérifier vos identifiants",
+  //       variant: isLogged ? "default" : "destructive",
+  //       duration: 3000,
+  //     });
+  //   dispatch(resetToast());
+  //   if (!isLogged && token) {
+  //     dispatch(logoutUser(token));
+  //   }
+  // }, [isLogged]);
 
   useEffect(() => {
     if (errorMessage.message) {
@@ -144,14 +148,31 @@ function App() {
           ) : (
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="profile" element={<MyProfilePage />} />
-              <Route path="meals" element={<MyMealsPage />} />
-              <Route path="meals/create" element={<MealFormPage />} />
-              <Route path="meals/:id" element={<MealFormPage />} />
-              <Route
-                path="reset-password/*"
-                element={<UpdateResetPasswordPage />}
-              />
+              {isLogged && (
+                <>
+                  <Route path="profile" element={<MyProfilePage />} />
+                  <Route path="meals" element={<MyMealsPage />} />
+                  <Route path="meals/create" element={<MealFormPage />} />
+                  <Route path="meals/:id" element={<MealFormPage />} />
+                  <Route
+                    path="reset-password/*"
+                    element={<UpdateResetPasswordPage />}
+                  />
+                </>
+              )}
+              {/* Redirect to homepage if not logged */}
+              {!isLogged && (
+                <Route
+                  path="*"
+                  element={
+                    <div className="flex justify-center items-center h-screen">
+                      <h1 className="text-2xl font-medium text-center">
+                        Veuillez vous connecter pour accéder à cette page
+                      </h1>
+                    </div>
+                  }
+                />
+              )}
             </Routes>
           )}
         </div>

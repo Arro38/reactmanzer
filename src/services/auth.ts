@@ -118,8 +118,9 @@ const fetchUserData = createAsyncThunk("auth/me", async (token: string) => {
     const response = await fetch(API_URL + "users/me", {
       headers: {
         Authorization: `Bearer ${token}`,
+        Accept: "application/json",
       },
-      method: "POST",
+      method: "GET",
     });
     if (!response.ok) return false;
     const result = (await response.json()) as User;
@@ -129,6 +130,69 @@ const fetchUserData = createAsyncThunk("auth/me", async (token: string) => {
     return false;
   }
 });
+
+const updateUserData = createAsyncThunk(
+  "auth/update",
+  async ({ user, token }: { user: User; token: string }) => {
+    try {
+      const response = await fetch(API_URL + "users/me", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+        method: "PUT",
+        body: JSON.stringify(user),
+      });
+      console.log(response);
+      if (!response.ok) return false;
+      const result = (await response.json()) as User;
+      return result;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+);
+
+const updateUserPassword = createAsyncThunk(
+  "auth/update-password",
+  async ({
+    token,
+    password,
+    new_password,
+    new_password_confirmation,
+  }: {
+    token: string;
+    password: string;
+    new_password: string;
+    new_password_confirmation: string;
+  }) => {
+    try {
+      const data = JSON.stringify({
+        password,
+        new_password,
+        new_password_confirmation,
+      });
+      const response = await fetch(API_URL + "users/me/password", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+        method: "PUT",
+        body: data,
+      });
+      if (!response.ok) return false;
+      const result = (await response.json()) as User;
+      return result;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+);
+
 export {
   loginUser,
   logoutUser,
@@ -136,4 +200,6 @@ export {
   fetchUserData,
   sendResetPasswordEmail,
   updateResetPassword,
+  updateUserData,
+  updateUserPassword,
 };

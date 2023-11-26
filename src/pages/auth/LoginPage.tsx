@@ -9,14 +9,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { setAuthContent, setLoading } from "@/redux/features/userSlice";
-import { RootState, store } from "@/redux/store";
+import { thunkDispatch } from "@/redux/store";
 import { loginUser } from "@/services/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { useToast } from "@/components/ui/use-toast";
-import { useEffect } from "react";
 
 function Login() {
-  const dispatch = useDispatch();
+  const dispatch = thunkDispatch;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,7 +21,7 @@ function Login() {
     const email = form.email.value;
     const password = form.password.value;
     dispatch(setLoading(true));
-    store.dispatch(loginUser({ email, password }));
+    dispatch(loginUser({ email, password }));
 
     form.reset();
   };
