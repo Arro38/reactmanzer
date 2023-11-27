@@ -1,8 +1,6 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-// import Meal from "@/models/Meal";
-import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,54 +13,66 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
 import Title from "@/components/common/Title";
+import { createMeal } from "@/services/api";
+import { store, thunkDispatch } from "@/redux/store";
+import {
+  setErrorMessage,
+  setSuccessMessage,
+} from "@/redux/features/toastSlice";
+import { setLoading } from "@/redux/features/userSlice";
+import { MealForm, mealSchema } from "@/models/Meal";
+import { useNavigate } from "react-router-dom";
 
 // Translate error messages
-const messages = {
-  required: "Ce champ est obligatoire",
-  minLength: "Ce champ doit contenir au moins 3 caractères",
-  maxLength: "Ce champ doit contenir au maximum 255 caractères",
-  url: "Ce champ doit être une URL valide",
-  number: "Ce champ doit être un nombre",
-  positive: "Ce champ doit être un nombre positif",
-};
 
-const mealSchema = z.object({
-  // Name is required, min length 3, max length 255 with error messages translated
-  name: z.string().min(3, messages.minLength).max(50, messages.maxLength),
-  description: z
-    .string()
-    .min(5, messages.minLength)
-    .max(50, messages.maxLength),
-  price: z.number().positive(messages.positive),
-  image: z.string().url(messages.url),
-  enabled: z.boolean().default(false),
-});
 // zodResolver to translate to french
 
 function MealFormPage() {
-  const { id } = useParams();
+  // const { id } = useParams();
   const form = useForm<z.infer<typeof mealSchema>>({
     resolver: zodResolver(mealSchema),
-    //   defaultValues: {
-    //     name: "",
-    //     description: "",
-    //     price: 0,
-    //     image: "",
-    //     enabled: false,
-    //   },
+    defaultValues: {
+      name: "eazeazdazdaz",
+      description: "dazdadzadazd",
+      price: 1,
+      image: { file: null },
+      enabled: false,
+    },
   });
+  const navigate = useNavigate();
+  const dispatch = thunkDispatch;
 
-  if (id) {
-    // Get meal from API
-    // reset form with meal
-    // form.reset(meal);
-  }
-  function onSubmit(values: z.infer<typeof mealSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  // if (id) {
+  // Get meal from API
+  // reset form with meal
+  // form.reset(meal);
+  // }
+  async function onSubmit(values: z.infer<typeof mealSchema>) {
+    dispatch(setLoading(true));
+    const result = await createMeal(
+      values as MealForm,
+      store.getState().users.token
+    );
+    dispatch(setLoading(false));
+    console.log(result);
+    if (result) {
+      dispatch(
+        setSuccessMessage({
+          message: "Repas créé avec succès",
+          title: "Succès",
+        })
+      );
+      // Redirect to meal page
+      navigate("/meals");
+    } else {
+      dispatch(
+        setErrorMessage({
+          message: "Erreur lors de la création du repas",
+          title: "Erreur",
+        })
+      );
+    }
   }
   return (
     <Form {...form}>
@@ -91,7 +101,7 @@ function MealFormPage() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="description" {...field} />
+                <Input type="text" placeholder="description" {...field} />
               </FormControl>
               <FormDescription>
                 Description du repas, visible par les clients
@@ -132,14 +142,22 @@ function MealFormPage() {
             </FormItem>
           )}
         />
+        {/* image file */}
         <FormField
           control={form.control}
-          name="image"
+          name="image.file"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Image</FormLabel>
               <FormControl>
-                <Input placeholder="image" {...field} />
+                <Input
+                  type="file"
+                  placeholder="image"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    field.onChange(file);
+                  }}
+                />
               </FormControl>
               <FormDescription>
                 Image du repas, visible par les clients
@@ -148,6 +166,7 @@ function MealFormPage() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="enabled"
