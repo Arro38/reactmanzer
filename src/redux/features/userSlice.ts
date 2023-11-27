@@ -20,6 +20,8 @@ export interface UserState {
   authContent: AuthContent;
   passwordReset: boolean | null;
   sendResetPasswordEmail: boolean | null;
+  isUpdated: boolean | null;
+  isLoggedToast: boolean | null;
 }
 
 const initialState: UserState = {
@@ -37,12 +39,15 @@ const initialState: UserState = {
   authContent: "none",
   passwordReset: null,
   sendResetPasswordEmail: null,
+  isUpdated: null,
+  isLoggedToast: null,
 };
 
 const resetUser = (state: any) => {
   state.loading = false;
-  state.token = "";
+  // state.token = "";
   state.isLogged = null;
+  state.isLoggedToast = null;
   state.authContent = "none";
   state.passwordReset = null;
   state.sendResetPasswordEmail = null;
@@ -53,7 +58,6 @@ const resetUser = (state: any) => {
     sector_id: 0,
   };
 };
-// TODO Refactoring the userSlice.ts file put authContent, successMessage and errorMessage in the same slice (utilSlice.ts)
 
 const userSlice = createSlice({
   name: "users",
@@ -74,17 +78,28 @@ const userSlice = createSlice({
     setUser(state, { payload }) {
       state.user = payload;
     },
+    setIsUpdated(state, { payload }) {
+      state.isUpdated = payload;
+    },
+    setIsLogged(state, { payload }) {
+      state.isLogged = payload;
+    },
+    setIsLoggedToast(state, { payload }) {
+      state.isLoggedToast = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
       state.loading = false;
       resetUser(state);
       if (payload === false) {
+        state.isLoggedToast = false;
         state.authContent = "login";
         return;
       }
       state.token = payload;
       state.isLogged = true;
+      state.isLoggedToast = true;
       state.authContent = "none";
     });
     builder.addCase(registerUser.fulfilled, (state, { payload }) => {
@@ -97,6 +112,7 @@ const userSlice = createSlice({
       state.authContent = "none";
       state.token = payload;
       state.isLogged = true;
+      state.isLoggedToast = true;
     });
     builder.addCase(fetchUserData.fulfilled, (state, action) => {
       state.loading = false;
@@ -108,6 +124,7 @@ const userSlice = createSlice({
     });
     builder.addCase(logoutUser.fulfilled, (state, { payload }) => {
       resetUser(state);
+      state.token = "";
     });
     builder.addCase(sendResetPasswordEmail.fulfilled, (state, { payload }) => {
       state.loading = false;
@@ -128,15 +145,19 @@ const userSlice = createSlice({
     builder.addCase(updateUserData.fulfilled, (state, { payload }) => {
       state.loading = false;
       if (payload === false) {
+        state.isUpdated = false;
         return;
       }
+      state.isUpdated = true;
       state.user = payload;
     });
     builder.addCase(updateUserPassword.fulfilled, (state, { payload }) => {
       state.loading = false;
       if (payload === false) {
+        state.passwordReset = false;
         return;
       }
+      state.passwordReset = true;
       state.user = payload;
     });
   },
@@ -147,5 +168,8 @@ export const {
   setUser,
   setSendResetPasswordEmail,
   setPasswordReset,
+  setIsUpdated,
+  setIsLogged,
+  setIsLoggedToast,
 } = userSlice.actions;
 export default userSlice.reducer;

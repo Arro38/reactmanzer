@@ -144,7 +144,6 @@ const updateUserData = createAsyncThunk(
         method: "PUT",
         body: JSON.stringify(user),
       });
-      console.log(response);
       if (!response.ok) return false;
       const result = (await response.json()) as User;
       return result;

@@ -22,11 +22,23 @@ import {
   setSuccessMessage,
 } from "./redux/features/toastSlice";
 import { fetchAllSectors } from "./services/api";
+import {
+  setIsLogged,
+  setIsLoggedToast,
+  setIsUpdated,
+  setPasswordReset,
+  setSendResetPasswordEmail,
+} from "./redux/features/userSlice";
+import { stat } from "fs";
 
 function App() {
   const loading = useSelector((state: RootState) => state.users.loading);
   const token = useSelector((state: RootState) => state.users.token);
   const isLogged = useSelector((state: RootState) => state.users.isLogged);
+  const isLoggedToast = useSelector(
+    (state: RootState) => state.users.isLoggedToast
+  );
+  const isUpdated = useSelector((state: RootState) => state.users.isUpdated);
   const errorMessage: ToastMessage = useSelector(
     (state: RootState) => state.toasts.error
   );
@@ -50,27 +62,30 @@ function App() {
   useEffect(() => {
     if (token) {
       dispatch(fetchUserData(token));
-    } else {
-      dispatch(logoutUser(token));
     }
   }, [token]);
 
-  // TODO REFACTORING TOASTS
-  // useEffect(() => {
-  //   if (isLogged !== null)
-  //     toast({
-  //       title: isLogged ? "Connexion réussie" : "Connexion échouée",
-  //       description: isLogged
-  //         ? "Vous êtes maintenant connecté"
-  //         : "Veuillez vérifier vos identifiants",
-  //       variant: isLogged ? "default" : "destructive",
-  //       duration: 3000,
-  //     });
-  //   dispatch(resetToast());
-  //   if (!isLogged && token) {
-  //     dispatch(logoutUser(token));
-  //   }
-  // }, [isLogged]);
+  useEffect(() => {
+    if (isLoggedToast) {
+      dispatch(
+        setSuccessMessage({
+          title: "Connexion réussie",
+          message: "Vous êtes maintenant connecté",
+        })
+      );
+    } else if (isLoggedToast === false) {
+      dispatch(
+        setErrorMessage({
+          title: "Erreur",
+          message: "Veuillez vérifier vos identifiants",
+        })
+      );
+    }
+    dispatch(setIsLoggedToast(null));
+    if (!isLogged && token) {
+      dispatch(logoutUser(token));
+    }
+  }, [isLoggedToast]);
 
   useEffect(() => {
     if (errorMessage.message) {
@@ -102,26 +117,26 @@ function App() {
 
   useEffect(() => {
     if (passwordReset) {
-      store.dispatch(
+      dispatch(
         setSuccessMessage({
           title: "Mot de passe modifié",
-          message:
-            "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe",
+          message: "Mot de passe modifié avec succès",
         })
       );
     } else if (passwordReset === false) {
-      store.dispatch(
+      dispatch(
         setErrorMessage({
           title: "Erreur",
-          message: "Le lien de réinitialisation n'est plus valide",
+          message: "Le mot de passe n'a pas pu être modifié",
         })
       );
     }
+    dispatch(setPasswordReset(null));
   }, [passwordReset]);
 
   useEffect(() => {
     if (sendResetPasswordEmail) {
-      store.dispatch(
+      dispatch(
         setSuccessMessage({
           title: "Email envoyé",
           message:
@@ -129,14 +144,34 @@ function App() {
         })
       );
     } else if (sendResetPasswordEmail === false) {
-      store.dispatch(
+      dispatch(
         setErrorMessage({
           title: "Erreur",
           message: "L'email n'a pas pu être envoyé",
         })
       );
     }
+    dispatch(setSendResetPasswordEmail(null));
   }, [sendResetPasswordEmail]);
+
+  useEffect(() => {
+    if (isUpdated) {
+      dispatch(
+        setSuccessMessage({
+          title: "Profil mis à jour",
+          message: "Votre profil a été mis à jour avec succès",
+        })
+      );
+    } else if (isUpdated === false) {
+      dispatch(
+        setErrorMessage({
+          title: "Erreur",
+          message: "Votre profil n'a pas pu être mis à jour",
+        })
+      );
+    }
+    dispatch(setIsUpdated(null));
+  }, [isUpdated]);
 
   return (
     <BrowserRouter>
