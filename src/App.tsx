@@ -21,7 +21,7 @@ import {
   setErrorMessage,
   setSuccessMessage,
 } from "./redux/features/toastSlice";
-import { fetchAllSectors } from "./services/api";
+import { fetchAllSectors, getMyMeals } from "./services/api";
 import {
   setIsLogged,
   setIsLoggedToast,
@@ -62,6 +62,7 @@ function App() {
   useEffect(() => {
     if (token) {
       dispatch(fetchUserData(token));
+      dispatch(getMyMeals(token));
     }
   }, [token]);
 

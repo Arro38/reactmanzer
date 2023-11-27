@@ -22,6 +22,19 @@ export interface MealForm {
   };
   enabled: boolean;
 }
+
+export const convertMealToMealForm = (meal: Meal) => {
+  return {
+    name: meal.name,
+    description: meal.description,
+    price: meal.price,
+    image: {
+      file: undefined,
+    },
+    enabled: meal.enabled,
+  };
+};
+
 const messages = {
   required: "Ce champ est obligatoire",
   minLength: "Ce champ doit contenir au moins 3 caractères",

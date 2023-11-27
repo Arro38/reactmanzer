@@ -21,15 +21,11 @@ import {
   setSuccessMessage,
 } from "@/redux/features/toastSlice";
 import { setLoading } from "@/redux/features/userSlice";
-import { MealForm, mealSchema } from "@/models/Meal";
-import { useNavigate } from "react-router-dom";
-
-// Translate error messages
-
-// zodResolver to translate to french
+import { MealForm, convertMealToMealForm, mealSchema } from "@/models/Meal";
+import { useNavigate, useParams } from "react-router-dom";
 
 function MealFormPage() {
-  // const { id } = useParams();
+  const { id } = useParams();
   const form = useForm<z.infer<typeof mealSchema>>({
     resolver: zodResolver(mealSchema),
     defaultValues: {
@@ -43,16 +39,23 @@ function MealFormPage() {
   const navigate = useNavigate();
   const dispatch = thunkDispatch;
 
-  // if (id) {
-  // Get meal from API
-  // reset form with meal
-  // form.reset(meal);
-  // }
+  if (id) {
+    const meal = store
+      .getState()
+      .meals.myMeals.find((m) => m.id.toString() === id);
+    if (!meal) {
+      navigate("/meals");
+      return null;
+    }
+    form.reset(convertMealToMealForm(meal));
+  }
   async function onSubmit(values: z.infer<typeof mealSchema>) {
     dispatch(setLoading(true));
-    const result = await createMeal(
-      values as MealForm,
-      store.getState().users.token
+    const result = await dispatch(
+      createMeal({
+        meal: values as MealForm,
+        token: store.getState().users.token,
+      })
     );
     dispatch(setLoading(false));
     console.log(result);

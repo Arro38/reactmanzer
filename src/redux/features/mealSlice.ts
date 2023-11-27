@@ -1,6 +1,12 @@
 import Meal from "@/models/Meal";
 import Sector from "@/models/Sector";
-import { fetchAllSectors } from "@/services/api";
+import {
+  createMeal,
+  deleteMeal,
+  fetchAllSectors,
+  getMyMeals,
+  updateMeal,
+} from "@/services/api";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { setLoading } from "./userSlice";
@@ -10,6 +16,7 @@ export interface MealState {
   allSectors: Sector[];
   sectorsSelected: Sector[];
   search: string;
+  myMeals: Meal[];
 }
 
 const initialState: MealState = {
@@ -17,6 +24,7 @@ const initialState: MealState = {
   allSectors: [],
   sectorsSelected: [],
   search: "",
+  myMeals: [],
 };
 
 type ToggleSectorSelected = {
@@ -50,9 +58,36 @@ const mealSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // TODO CREATE MEAL UPDATE MYMEALS STATE
+    // builder.addCase(createMeal.fulfilled, (state, action) => {
+    //   setLoading(false);
+    //   if (action.payload) {
+    //     state.myMeals.push(action.meta.arg);
+    //   }
     builder.addCase(fetchAllSectors.fulfilled, (state, action) => {
       setLoading(false);
       state.allSectors = action.payload;
+    });
+    builder.addCase(getMyMeals.fulfilled, (state, action) => {
+      setLoading(false);
+      state.myMeals = action.payload;
+    });
+    builder.addCase(deleteMeal.fulfilled, (state, action) => {
+      setLoading(false);
+      if (action.payload) {
+        state.myMeals = state.myMeals.filter(
+          (m) => m.id !== action.meta.arg.id
+        );
+      }
+    });
+    builder.addCase(updateMeal.fulfilled, (state, action) => {
+      setLoading(false);
+      if (action.payload) {
+        const mealUpdated = action.payload as Meal;
+        state.myMeals = state.myMeals.map((m) =>
+          m.id === mealUpdated.id ? mealUpdated : m
+        );
+      }
     });
   },
 });
