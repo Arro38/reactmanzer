@@ -1,5 +1,4 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import MyProfilePage from "./pages/user/MyProfilePage";
@@ -29,6 +28,7 @@ import {
   setSendResetPasswordEmail,
 } from "./redux/features/userSlice";
 import PolitiquePage from "./pages/PolitiquePage";
+import AllMeals from "./components/common/Meal/AllMeals";
 
 function App() {
   const loading = useSelector((state: RootState) => state.users.loading);
@@ -183,7 +183,7 @@ function App() {
             <Loading />
           ) : (
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<AllMeals />} />
               <Route path="/politique" element={<PolitiquePage />} />
               {isLogged && (
                 <>

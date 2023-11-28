@@ -72,6 +72,37 @@ export const deleteMeal = createAsyncThunk(
   }
 );
 
+export const setMealEnabled = createAsyncThunk(
+  "meals/setMealEnabled",
+  async ({
+    id,
+    enabled,
+    token,
+  }: {
+    id: number;
+    enabled: boolean;
+    token: string;
+  }) => {
+    try {
+      const response = await fetch(API_URL + "meals/" + id + "/status", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          enabled: enabled,
+        }),
+      });
+      const data = (await response.json()) as Meal;
+      return response.ok ? data : false;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+);
+
 export const updateMeal = createAsyncThunk(
   "meals/updateMeal",
   async ({
@@ -108,7 +139,7 @@ export const updateMeal = createAsyncThunk(
   }
 );
 
-export const getMeal = async (id: number) => {
+export const getMeal = async (id: string) => {
   const response = await fetch(API_URL + "meals/" + id);
   return (await response.json()) as Meal;
 };

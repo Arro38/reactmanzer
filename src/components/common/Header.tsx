@@ -1,4 +1,3 @@
-import { UserNav } from "./Header/UserNav";
 import { MainNav } from "./Header/MainNav";
 
 function Header() {

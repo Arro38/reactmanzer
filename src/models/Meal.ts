@@ -68,7 +68,8 @@ export const mealSchema = z.object({
     .string()
     .min(5, messages.minLength)
     .max(50, messages.maxLength),
-  price: z.number().positive(messages.positive),
+  // price float, positive
+  price: z.number().positive(messages.positive) || z.string(),
   image: z.object({
     file: z
       .any()

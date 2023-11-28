@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import Title from "@/components/common/Title";
-import { createMeal } from "@/services/api";
+import { createMeal, getMeal } from "@/services/api";
 import { store, thunkDispatch } from "@/redux/store";
 import {
   setErrorMessage,
@@ -23,6 +23,7 @@ import {
 import { setLoading } from "@/redux/features/userSlice";
 import { MealForm, convertMealToMealForm, mealSchema } from "@/models/Meal";
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 function MealFormPage() {
   const { id } = useParams();
@@ -39,16 +40,19 @@ function MealFormPage() {
   const navigate = useNavigate();
   const dispatch = thunkDispatch;
 
-  if (id) {
-    const meal = store
-      .getState()
-      .meals.myMeals.find((m) => m.id.toString() === id);
-    if (!meal) {
-      navigate("/meals");
-      return null;
+  useEffect(() => {
+    const fetchMeal = async (id: string) => {
+      const meal = await getMeal(id);
+      form.setValue("name", meal.name);
+      form.setValue("description", meal.description);
+      form.setValue("price", meal.price);
+      form.setValue("enabled", meal.enabled);
+    };
+    if (id) {
+      fetchMeal(id);
     }
-    form.reset(convertMealToMealForm(meal));
-  }
+  }, [id]);
+
   async function onSubmit(values: z.infer<typeof mealSchema>) {
     dispatch(setLoading(true));
     const result = await dispatch(
@@ -58,7 +62,6 @@ function MealFormPage() {
       })
     );
     dispatch(setLoading(false));
-    console.log(result);
     if (result) {
       dispatch(
         setSuccessMessage({
@@ -80,6 +83,19 @@ function MealFormPage() {
   return (
     <Form {...form}>
       <Title title="Fiche repas" />
+      {id && (
+        <p className=" text-slate-500 text-center">
+          {" "}
+          Page en cours de développement ...
+          <br />
+          Voici les fonctionnalités à venir :
+          <ul>
+            <li>Supprimer/Modifier l'image</li>
+            <li>Corriger le champs prix (il faut modifier au chargement)</li>
+            <li>Ajout chargement Actif</li>
+          </ul>
+        </p>
+      )}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
@@ -123,6 +139,7 @@ function MealFormPage() {
               <FormControl>
                 <Input
                   type="number"
+                  step="0.01"
                   min="1"
                   max="100"
                   placeholder="prix"

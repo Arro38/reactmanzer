@@ -6,6 +6,7 @@ import {
   fetchAllMeals,
   fetchAllSectors,
   getMyMeals,
+  setMealEnabled,
   updateMeal,
 } from "@/services/api";
 import { createSlice } from "@reduxjs/toolkit";
@@ -59,26 +60,30 @@ const mealSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // specific action
+    builder.addCase(setMealEnabled.fulfilled, (state, action) => {
+      if (action.payload) {
+        const mealUpdated = action.payload as Meal;
+        state.myMeals = state.myMeals.map((m) =>
+          m.id === mealUpdated.id ? mealUpdated : m
+        );
+      }
+    });
     builder.addCase(fetchAllMeals.fulfilled, (state, action) => {
-      setLoading(false);
       state.allMeals = action.payload;
     });
     builder.addCase(createMeal.fulfilled, (state, action) => {
-      setLoading(false);
       if (action.payload) {
         state.myMeals.push(action.payload);
       }
     });
     builder.addCase(fetchAllSectors.fulfilled, (state, action) => {
-      setLoading(false);
       state.allSectors = action.payload;
     });
     builder.addCase(getMyMeals.fulfilled, (state, action) => {
-      setLoading(false);
       state.myMeals = action.payload;
     });
     builder.addCase(deleteMeal.fulfilled, (state, action) => {
-      setLoading(false);
       if (action.payload) {
         state.myMeals = state.myMeals.filter(
           (m) => m.id !== action.meta.arg.id
@@ -89,7 +94,6 @@ const mealSlice = createSlice({
       }
     });
     builder.addCase(updateMeal.fulfilled, (state, action) => {
-      setLoading(false);
       if (action.payload) {
         const mealUpdated = action.payload as Meal;
         state.myMeals = state.myMeals.map((m) =>
@@ -97,6 +101,27 @@ const mealSlice = createSlice({
         );
       }
     });
+    // defaut pending action  set loading to true
+    builder.addMatcher(
+      (action) => action.type.endsWith("/pending"),
+      (state) => {
+        setLoading(true);
+      }
+    );
+    // defaut rejected action  set loading to false
+    builder.addMatcher(
+      (action) => action.type.endsWith("/rejected"),
+      (state) => {
+        setLoading(false);
+      }
+    );
+    // defaut fulfilled action  set loading to false
+    builder.addMatcher(
+      (action) => action.type.endsWith("/fulfilled"),
+      (state) => {
+        setLoading(false);
+      }
+    );
   },
 });
 
