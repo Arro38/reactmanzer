@@ -15,7 +15,7 @@ export function Search() {
     <div className="flex items-center gap-4 flex-wrap justify-center pb-4">
       <Input
         type="search"
-        placeholder="Rechercher..."
+        placeholder="Nom , description, restaurant ..."
         className="md:w-[100px] lg:w-[300px] border-['217.2 32.6% 17.5%']"
         onInput={(e) => {
           dispatch(setSearch(e.currentTarget.value));

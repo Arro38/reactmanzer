@@ -32,7 +32,7 @@ function Register() {
     const password = form.password.value;
     const user: User = {
       id: 0,
-      name: "name",
+      name: form.nameInput.value,
       email: form.email.value,
       tel: form.telephone.value,
       address: form.address.value,
@@ -50,6 +50,18 @@ function Register() {
         <DialogDescription>Entrez vos informations.</DialogDescription>
       </DialogHeader>
       <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="nameInput" className="text-right">
+            Nom du restaurant
+          </Label>
+          <Input
+            id="nameInput"
+            type="text"
+            placeholder="Nom ..."
+            required
+            className="col-span-3"
+          />
+        </div>
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="email" className="text-right">
             Email
@@ -95,7 +107,7 @@ function Register() {
           <Input
             id="address"
             type="text"
-            placeholder="address"
+            placeholder="addresse"
             required
             className="col-span-3"
           />

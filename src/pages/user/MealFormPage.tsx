@@ -30,8 +30,8 @@ function MealFormPage() {
   const form = useForm<z.infer<typeof mealSchema>>({
     resolver: zodResolver(mealSchema),
     defaultValues: {
-      name: "eazeazdazdaz",
-      description: "dazdadzadazd",
+      name: "",
+      description: "",
       price: 1,
       image: { file: null },
       enabled: false,

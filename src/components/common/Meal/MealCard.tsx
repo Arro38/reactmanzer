@@ -42,7 +42,10 @@ export function MealCard({
 
   return (
     <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-      <div className={cn("space-y-3", className)} {...props}>
+      <div
+        className={cn("space-y-3 border shadow-md p-4 w-80 h-80", className)}
+        {...props}
+      >
         <div className="overflow-hidden rounded-md">
           <img
             onClick={handleClick}
@@ -70,18 +73,23 @@ export function MealCard({
       </div>
       <div
         className={cn(
-          "h-full flex flex-col gap-6 items-center justify-center",
+          "flex flex-col gap-6 items-center justify-center space-y-3 border shadow-md p-4 w-80 h-80",
           className
         )}
         {...props}
         onClick={handleClick}
       >
-        <Button className=" bg-slate-400">
-          <MapPin /> Y aller !
-        </Button>
-        <Button className="hover:bg-slate-400">
-          <PhoneCall /> Appeler{" "}
-        </Button>
+        {/* Link to google Maps */}
+        <a href={"https://www.google.com/maps/dir//" + meal.user.address}>
+          <Button className=" bg-slate-400">
+            <MapPin /> Y aller !
+          </Button>
+        </a>
+        <a href={"tel:" + meal.user.tel}>
+          <Button className="hover:bg-slate-400">
+            <PhoneCall /> Appeler{" "}
+          </Button>
+        </a>
       </div>
     </ReactCardFlip>
   );
