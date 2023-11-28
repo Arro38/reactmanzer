@@ -21,15 +21,13 @@ import {
   setErrorMessage,
   setSuccessMessage,
 } from "./redux/features/toastSlice";
-import { fetchAllSectors, getMyMeals } from "./services/api";
+import { fetchAllMeals, fetchAllSectors, getMyMeals } from "./services/api";
 import {
-  setIsLogged,
   setIsLoggedToast,
   setIsUpdated,
   setPasswordReset,
   setSendResetPasswordEmail,
 } from "./redux/features/userSlice";
-import { stat } from "fs";
 
 function App() {
   const loading = useSelector((state: RootState) => state.users.loading);
@@ -57,6 +55,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchAllSectors());
+    dispatch(fetchAllMeals());
   }, []);
 
   useEffect(() => {

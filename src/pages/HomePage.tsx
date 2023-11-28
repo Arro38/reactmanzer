@@ -4,7 +4,7 @@ import MostViewedMeals from "@/components/common/Meal/MostViewedMeals";
 function HomePage() {
   return (
     <>
-      <MostViewedMeals />
+      {/* <MostViewedMeals /> */}
       <AllMeals />
     </>
   );

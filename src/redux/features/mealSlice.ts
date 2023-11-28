@@ -3,6 +3,7 @@ import Sector from "@/models/Sector";
 import {
   createMeal,
   deleteMeal,
+  fetchAllMeals,
   fetchAllSectors,
   getMyMeals,
   updateMeal,
@@ -58,12 +59,16 @@ const mealSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // TODO CREATE MEAL UPDATE MYMEALS STATE
-    // builder.addCase(createMeal.fulfilled, (state, action) => {
-    //   setLoading(false);
-    //   if (action.payload) {
-    //     state.myMeals.push(action.meta.arg);
-    //   }
+    builder.addCase(fetchAllMeals.fulfilled, (state, action) => {
+      setLoading(false);
+      state.allMeals = action.payload;
+    });
+    builder.addCase(createMeal.fulfilled, (state, action) => {
+      setLoading(false);
+      if (action.payload) {
+        state.myMeals.push(action.payload);
+      }
+    });
     builder.addCase(fetchAllSectors.fulfilled, (state, action) => {
       setLoading(false);
       state.allSectors = action.payload;

@@ -9,6 +9,10 @@ interface Meal {
   enabled: boolean;
   user: {
     id: number;
+    name: string;
+    tel: string;
+    address: string;
+    email: string;
     sector_id: number;
   };
 }

@@ -8,6 +8,11 @@ export const fetchAllSectors = createAsyncThunk("meals/sectors", async () => {
   return (await response.json()) as Sector[];
 });
 
+export const fetchAllMeals = createAsyncThunk("meals/allMeals", async () => {
+  const response = await fetch(API_URL + "meals");
+  return (await response.json()) as Meal[];
+});
+
 // Meal
 export const createMeal = createAsyncThunk(
   "meals/createMeal",
@@ -28,9 +33,8 @@ export const createMeal = createAsyncThunk(
         },
         body: form,
       });
-      const data = await response.json();
-      console.log(data);
-      return response.ok ? true : false;
+      const data = (await response.json()) as Meal;
+      return response.ok ? data : false;
     } catch (err) {
       console.log(err);
       return false;
@@ -60,7 +64,6 @@ export const deleteMeal = createAsyncThunk(
           Authorization: "Bearer " + token,
         },
       });
-
       return response.ok ? true : false;
     } catch (err) {
       console.log(err);
