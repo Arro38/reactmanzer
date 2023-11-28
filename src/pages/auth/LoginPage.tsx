@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import {
-  DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
@@ -9,7 +8,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { setAuthContent, setLoading } from "@/redux/features/userSlice";
-import { store, thunkDispatch } from "@/redux/store";
+import { thunkDispatch } from "@/redux/store";
 import { loginUser } from "@/services/auth";
 
 function Login() {
@@ -45,7 +44,6 @@ function Login() {
             type="email"
             placeholder="email ..."
             className="col-span-3"
-            defaultValue={"formation.etienne.re@gmail.com"}
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
@@ -58,7 +56,6 @@ function Login() {
             type="password"
             placeholder="password"
             className="col-span-3"
-            defaultValue={"formation.etienne.re@gmail.com"}
           />
         </div>
         <DialogFooter>

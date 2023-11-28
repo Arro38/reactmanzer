@@ -2,15 +2,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { setErrorMessage } from "@/redux/features/toastSlice";
 import { updateResetPassword } from "@/services/auth";
 import { thunkDispatch } from "@/redux/store";
 import { useState } from "react";
 function UpdateResetPasswordPage() {
   const dispatch = thunkDispatch;
-  let [searchParams, setSearchParams] = useSearchParams();
-  const [token, setToken] = useState(searchParams.get("token"));
+  let [searchParams] = useSearchParams();
+  const [token] = useState(searchParams.get("token"));
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,7 +67,6 @@ function UpdateResetPasswordPage() {
           placeholder="mot de passe"
           required
           className="col-span-3"
-          defaultValue={"1234567890"}
         />
       </div>
       <div className="grid grid-cols-4 items-center gap-4">
@@ -81,7 +79,6 @@ function UpdateResetPasswordPage() {
           placeholder="mot de passe"
           required
           className="col-span-3"
-          defaultValue={"1234567890"}
         />
       </div>
       <Button type="submit">Envoyer</Button>

@@ -104,21 +104,21 @@ const mealSlice = createSlice({
     // defaut pending action  set loading to true
     builder.addMatcher(
       (action) => action.type.endsWith("/pending"),
-      (state) => {
+      () => {
         setLoading(true);
       }
     );
     // defaut rejected action  set loading to false
     builder.addMatcher(
       (action) => action.type.endsWith("/rejected"),
-      (state) => {
+      () => {
         setLoading(false);
       }
     );
     // defaut fulfilled action  set loading to false
     builder.addMatcher(
       (action) => action.type.endsWith("/fulfilled"),
-      (state) => {
+      () => {
         setLoading(false);
       }
     );

@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import logoLight from "@/assets/images/logoLight.png";
 import HomeAuthPage from "@/pages/auth/HomeAuthPage";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -18,7 +17,7 @@ export function MainNav({
       >
         <Link to={`/`}>
           <img
-            src={logoLight}
+            src={"images/logoLight.png"}
             className="h-20 object-cover transition-all hover:scale-105"
           />
         </Link>

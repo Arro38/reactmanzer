@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import MyProfilePage from "./pages/user/MyProfilePage";
@@ -204,7 +204,9 @@ function App() {
                   element={
                     <div className="flex justify-center items-center h-screen">
                       <h1 className="text-2xl font-medium text-center">
-                        Veuillez vous connecter pour accéder à cette page
+                        Veuillez vous connecter pour accéder à cette page.
+                        Retourner sur la page d'accueil en cliquant{" "}
+                        <Link to="/">ici</Link>.
                       </h1>
                     </div>
                   }

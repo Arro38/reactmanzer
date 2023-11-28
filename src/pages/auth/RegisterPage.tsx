@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import {
-  DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
@@ -61,7 +60,6 @@ function Register() {
             placeholder="email ..."
             required
             className="col-span-3"
-            defaultValue={"exemple2@exemple.com"}
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">
@@ -74,7 +72,6 @@ function Register() {
             placeholder="mot de passe"
             required
             className="col-span-3"
-            defaultValue={"1234567890"}
           />
         </div>
         {/* telephone */}
@@ -88,7 +85,6 @@ function Register() {
             placeholder="téléphone"
             required
             className="col-span-3"
-            defaultValue={"0123456789"}
           />
         </div>
         {/* address */}
@@ -102,7 +98,6 @@ function Register() {
             placeholder="address"
             required
             className="col-span-3"
-            defaultValue={"address"}
           />
         </div>
         <div className="grid grid-cols-4 items-center gap-4">

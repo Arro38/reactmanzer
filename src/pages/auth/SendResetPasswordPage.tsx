@@ -8,10 +8,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { setAuthContent } from "@/redux/features/userSlice";
-import { store, thunkDispatch } from "@/redux/store";
+import { thunkDispatch } from "@/redux/store";
 import { sendResetPasswordEmail } from "@/services/auth";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 
 function SendResetPasswordPage() {
   const dispatch = thunkDispatch;

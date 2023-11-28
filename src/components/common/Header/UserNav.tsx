@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { resetToast, setSuccessMessage } from "@/redux/features/toastSlice";
-import { RootState, store } from "@/redux/store";
+import { RootState, thunkDispatch } from "@/redux/store";
 import { logoutUser } from "@/services/auth";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -18,11 +18,12 @@ import { Link } from "react-router-dom";
 export function UserNav() {
   const user = useSelector((state: RootState) => state.users.user);
   const token = useSelector((state: RootState) => state.users.token);
+  const dispatch = thunkDispatch;
 
   const logout = () => {
-    store.dispatch(logoutUser(token));
-    store.dispatch(resetToast());
-    store.dispatch(
+    dispatch(logoutUser(token));
+    dispatch(resetToast());
+    dispatch(
       setSuccessMessage({
         title: "Déconnexion réussie",
         message: "Vous êtes maintenant déconnecté",

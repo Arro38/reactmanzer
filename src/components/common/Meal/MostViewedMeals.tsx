@@ -1,14 +1,12 @@
 import Meal from "@/models/Meal";
 import { ScrollArea, ScrollBar } from "../../ui/scroll-area";
-import { Separator } from "../../ui/separator";
 import { MealCard } from "./MealCard";
-import meals from "@/data/meals";
 import Title from "../Title";
-import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 function MostViewedMeals() {
-  // const search = useSelector((state: RootState) => state.meals.search);
+  const meals = useSelector((state: RootState) => state.meals.allMeals);
   return (
     <>
       <Title
@@ -21,7 +19,7 @@ function MostViewedMeals() {
             {meals.map((meal: Meal) => (
               <MealCard
                 key={meal.name}
-                album={meal}
+                meal={meal}
                 className="w-[250px]"
                 aspectRatio="portrait"
                 width={250}

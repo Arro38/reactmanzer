@@ -122,7 +122,7 @@ const userSlice = createSlice({
       }
       state.user = action.payload;
     });
-    builder.addCase(logoutUser.fulfilled, (state, { payload }) => {
+    builder.addCase(logoutUser.fulfilled, (state) => {
       resetUser(state);
       state.token = "";
     });

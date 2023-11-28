@@ -2,7 +2,7 @@ import Meal from "@/models/Meal";
 import { useState } from "react";
 import { Cross2Icon, CheckIcon } from "@radix-ui/react-icons";
 import { RootState, thunkDispatch } from "@/redux/store";
-import { setMealEnabled, updateMeal } from "@/services/api";
+import { setMealEnabled } from "@/services/api";
 import { useSelector } from "react-redux";
 
 function ColumnEnabled({ meal }: { meal: Meal }) {
