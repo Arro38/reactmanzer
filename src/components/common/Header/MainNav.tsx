@@ -29,12 +29,20 @@ export function MainNav({
           Accueil
         </Link>
         {isLogged && (
-          <Link
-            to={`/meals`}
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-          >
-            Mes Repas
-          </Link>
+          <>
+            <Link
+              to={`/meals`}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
+              Mes Repas
+            </Link>
+            <Link
+              to={`/meals/create`}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
+              Créer un Repas
+            </Link>
+          </>
         )}
       </nav>
       <div className="ml-auto flex items-center space-x-4">

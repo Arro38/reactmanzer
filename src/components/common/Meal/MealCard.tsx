@@ -2,9 +2,12 @@ import { Button } from "@/components/ui/button";
 import { STORAGE_URL } from "@/config/constants";
 import { cn } from "@/lib/utils";
 import Meal from "@/models/Meal";
+import { RootState } from "@/redux/store";
 import { MapPin, PhoneCall } from "lucide-react";
 import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
+import { useSelector } from "react-redux";
+import ActionsButton from "./MyMeals/ActionsButton";
 
 interface MealCardProps extends React.HTMLAttributes<HTMLDivElement> {
   meal: Meal;
@@ -35,6 +38,8 @@ export function MealCard({
     setIsFlipped(!isFlipped);
   };
 
+  const user = useSelector((state: RootState) => state.users.user);
+
   return (
     <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
       <div className={cn("space-y-3", className)} {...props}>
@@ -60,6 +65,7 @@ export function MealCard({
             Adresse : {meal.user.address}
           </p>
           <p className="text-xs text-muted-foreground">Tel : {meal.user.tel}</p>
+          {user.id === meal.user.id && <ActionsButton meal={meal} />}
         </div>
       </div>
       <div

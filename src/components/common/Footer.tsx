@@ -1,5 +1,6 @@
 import { Github, Linkedin, Slack, Twitter } from "lucide-react";
 import MentionsLegales from "./MentionsLegales";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -9,6 +10,9 @@ function Footer() {
           <ul className="flex items-center space-x-4">
             <li>
               <a href={"mailto:contact@formaterz.fr"}>Contactez-moi</a>
+            </li>
+            <li>
+              <Link to="/politique">Politique de confidentialité</Link>
             </li>
             <li>
               <MentionsLegales />

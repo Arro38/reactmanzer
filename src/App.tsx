@@ -28,6 +28,7 @@ import {
   setPasswordReset,
   setSendResetPasswordEmail,
 } from "./redux/features/userSlice";
+import PolitiquePage from "./pages/PolitiquePage";
 
 function App() {
   const loading = useSelector((state: RootState) => state.users.loading);
@@ -175,7 +176,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className=" flex flex-col h-screen justify-between  bg-primary-foreground">
+      <div className=" flex flex-col h-full min-h-screen justify-between  bg-primary-foreground">
         <Header />
         <div className="mb-auto px-4 py-6 lg:px-8">
           {loading ? (
@@ -183,6 +184,7 @@ function App() {
           ) : (
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/politique" element={<PolitiquePage />} />
               {isLogged && (
                 <>
                   <Route path="profile" element={<MyProfilePage />} />

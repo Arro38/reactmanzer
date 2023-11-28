@@ -1,13 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.15.0/tarteaucitron.js"
+      integrity="sha512-62eOEgHMZUJrhPye67OGYDBdRtoGKAQ3R9e770/990JWPvW9PxVT019z7juVdSc6itOy+zZ3yYOUmeggwmbo7Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      tarteaucitron.init({
+        privacyUrl: "/politique", // URL de votre politique de confidentialité
+        hashtag: "#tarteaucitron", // Hashtag pour personnaliser les cookies
+        cookieName: "manzer.re", // Nom du cookie
+        orientation: "bottom", // Position de la bannière (top - bottom)
+        DenyAllCta: true /* Show the deny all button */,
+        AcceptAllCta: true /* Show the accept all button when highPrivacy on */,
+        highPrivacy: true /* HIGHLY RECOMMANDED Disable auto consent */,
+        handleBrowserDNTRequest: false /* If Do Not Track == 1, disallow all */,
+        removeCredit: true /* Remove credit link */,
+        cookieslist: false /* Show the cookie list */,
+      });
+    </script>
+    <script>
+      tarteaucitron.userInterface.showBanner();
+    </script>
   </body>
 </html>

@@ -83,6 +83,9 @@ const mealSlice = createSlice({
         state.myMeals = state.myMeals.filter(
           (m) => m.id !== action.meta.arg.id
         );
+        state.allMeals = state.allMeals.filter(
+          (m) => m.id !== action.meta.arg.id
+        );
       }
     });
     builder.addCase(updateMeal.fulfilled, (state, action) => {

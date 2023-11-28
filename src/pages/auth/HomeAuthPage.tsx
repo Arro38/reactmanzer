@@ -30,7 +30,7 @@ export function HomeAuth() {
             }}
           >
             <span className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary cursor-pointer">
-              Espace Professionnel
+              Se connecter
             </span>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
