@@ -1,30 +1,44 @@
-# React + TypeScript + Vite
+# Frontend du Projet Manzer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
+Le frontend de Manzer est une application web développée avec ReactJS, utilisant des outils modernes tels que Bun, ViteJS, et Tailwind pour une expérience utilisateur rapide et réactive. L'application intègre également RadixUI pour des composants d'interface utilisateur riches et accessibles.
 
-Currently, two official plugins are available:
+## Caractéristiques
+- **ReactJS**: Pour la construction de l'interface utilisateur.
+- **Bun & ViteJS**: Pour le développement rapide et le bundling efficace.
+- **Tailwind**: Pour le design responsive et personnalisable.
+- **RadixUI**: Pour des composants d'interface utilisateur complexes et accessibles.
+- **Redux Toolkit & React Redux**: Pour la gestion d'état globale.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+1. Assurez-vous d'avoir Node.js installé.
+2. Clonez le dépôt du projet.
+3. Exécutez `npm install` ou `yarn install` pour installer les dépendances.
 
-## Expanding the ESLint configuration
+## Démarrage du projet
+- Utilisez la commande `npm run dev` ou `yarn dev` pour démarrer le serveur de développement.
+- Accédez à `http://localhost:3000` pour voir l'application en action.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Structure des Routes
+L'application comprend les routes suivantes :
+- `/` : Affiche tous les repas disponibles.
+- `/politique` : Page de politique du site.
+- `/profile` : Page de profil utilisateur (accessible uniquement aux utilisateurs connectés).
+- `/meals` : Liste des repas de l'utilisateur (nécessite une authentification).
+- `/meals/create` : Formulaire pour créer un nouveau repas (nécessite une authentification).
+- `/meals/:id` : Formulaire pour éditer un repas existant (nécessite une authentification).
+- `/reset-password/*` : Page pour réinitialiser ou mettre à jour le mot de passe.
 
-- Configure the top-level `parserOptions` property like this:
+## Dépendances
+- React et React DOM pour la base de l'application.
+- Plusieurs composants Radix UI pour divers éléments d'interface utilisateur.
+- Autres dépendances listées dans `package.json`.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Contribution
+Les contributions sont les bienvenues. Veuillez suivre les conventions de codage standard de React et de JavaScript/TypeScript, et soumettre des pull requests pour toute modification ou amélioration proposée.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Licence
+Ce projet est la propriété exclusive de son auteur et ne peut être réutilisé, copié, modifié ou distribué sans autorisation préalable. Tous les droits sont réservés.
+
+## Contact
+Pour toute question ou assistance, veuillez contacter l'équipe de développement [Manzer](formation.etienne.re@gmail.com).
